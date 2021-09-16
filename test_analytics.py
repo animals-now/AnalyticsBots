@@ -37,7 +37,7 @@ def create_session_decreased_alert(website: str, view: str, period: int, decreas
                             "Decreased by: {}%\n" \
                             "Explanation: This message sent because the sessions on {} decreased " \
                             "by {}% in the last {} days compare to the {} days before. Which means there is far less " \
-                            "visitors on the website in this period compare to the last before".format(website, view, period,
+                            "visitors on the website in this period compare to the last one".format(website, view, period,
                                                                                                  decreased_by, website,
                                                                                                  decreased_by, period,
                                                                                                  period)
