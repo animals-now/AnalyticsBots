@@ -101,7 +101,7 @@ def create_failure_dictionary(change_dict: Dict[str, float], decrease_bound: flo
     return failure_dict
 
 
-def get_session_decreased_failure(analytics_service: DataGetter, VIEW_DICT: Dict[str, str], start: int = 30, end: int = 0) ->\
+def get_session_decreased_failure(analytics_service: DataGetter, view_dict: Dict[str, str], start: int = 30, end: int = 0) ->\
         Dict[str, float]:
     """
     Check for each view if there is a decrease in sessions from given the period compare to the one before. If there is a
@@ -112,7 +112,7 @@ def get_session_decreased_failure(analytics_service: DataGetter, VIEW_DICT: Dict
     :param end: first periods end date(int). example 0 = "today".
     :return: failure dict - {view: change percent}
     """
-    session_report = analytics_service.get_metric_report(VIEW_DICT, DIMENSION['sessions'], start=start, end=end)
+    session_report = analytics_service.get_metric_report(view_dict, DIMENSION['sessions'], start=start, end=end)
     change_dict = calculate_report_change_percent(session_report)
     failure_dict = create_failure_dictionary(change_dict, SESSIONS_DECREASE_FAILURE)
     return failure_dict
