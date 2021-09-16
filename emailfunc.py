@@ -2,10 +2,6 @@ import base64
 from email.mime.text import MIMEText
 from apiclient import errors
 
-
-
-
-
 def create_message(sender, to, subject, message_text):
     """Create a message for an email.
 
