@@ -2,7 +2,6 @@ from typing import Dict, List
 from time import sleep
 
 import Setup
-import auth
 from data_getter import DataGetter
 import emailfunc
 
@@ -161,29 +160,3 @@ def send_email_on_sign_ups_decreased_failure(gmail_service, failure_dict: Dict[s
         msg = emailfunc.create_message(SENDER, TO, subject, body)
         emailfunc.send_message(gmail_service, USER_ID, msg)
         sleep(3)
-
-
-                                         
-                                         
-def main():
-    analytics_service = DataGetter()
-    gmail_service = auth.get_service_gmail()
-    
-    #### WEEKLY TEST ####
-
-    week_session_failure_dict = get_session_decreased_failure(analytics_service, VIEW_DICT, start=7, end=0)
-    send_email_on_session_decreased_failure(gmail_service, week_session_failure_dict, 7)
-
-    week_sign_ups_failure_dict = get_challenges_sign_ups_failure(analytics_service, start=7, end=0)
-    send_email_on_sign_ups_decreased_failure(gmail_service, week_sign_ups_failure_dict, 7)
-
-    #### MONTHLY TEST ####
-    session_failure_dict = get_session_decreased_failure(analytics_service, VIEW_DICT, start=30, end=0)
-    send_email_on_session_decreased_failure(gmail_service, session_failure_dict, 30)
-
-    sign_ups_failure_dict = get_challenges_sign_ups_failure(analytics_service, start=30, end=0)
-    send_email_on_sign_ups_decreased_failure(gmail_service, sign_ups_failure_dict, 30)
-
-
-if __name__ == '__main__':
-    main()
