@@ -2,12 +2,6 @@ from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 import Setup
 
-
-SERVICE_ACCOUNTS_CREDS_PATH = Setup.SERVICE_ACCOUNTS_CREDS_PATH
-SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
-KEY_FILE_LOCATION = SERVICE_ACCOUNTS_CREDS_PATH
-
-
 class DataGetter:
     """
     The purpose of this class is to easily get data from Google Analytics API.
@@ -18,22 +12,7 @@ class DataGetter:
     https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/reports/batchGet#Operator
     """
     def __init__(self):
-        self.analytics = DataGetter.__initialize_analyticsreporting()
-
-    @staticmethod
-    def __initialize_analyticsreporting():
-        """Initializes an Analytics Reporting API V4 service object.
-
-      Returns:
-        An authorized Analytics Reporting API V4 service object.
-      """
-        credentials = ServiceAccountCredentials.from_json_keyfile_name(
-            KEY_FILE_LOCATION, SCOPES)
-
-        # Build the service object.
-        analytics = build('analyticsreporting', 'v4', credentials=credentials)
-
-        return analytics
+       self.analytics = auth.get_service_analytics()
 
     @staticmethod
     def __create_date_ranges(start, end, num_periods):
