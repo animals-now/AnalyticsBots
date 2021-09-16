@@ -17,6 +17,8 @@ GMAIL_TOKEN_PATH = Setup.GMAIL_TOKEN_PATH
 SCOPES_GMAIL = ['https://www.googleapis.com/auth/gmail.modify']
 SCOPES_SHEETS = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',
                  "https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
+SCOPES_ANALYTICS = ['https://www.googleapis.com/auth/analytics.readonly']
+
 
 def get_service_gmail():
 
@@ -46,3 +48,15 @@ def get_service_sheet():
     creds = ServiceAccountCredentials.from_json_keyfile_name(SERVICE_ACCOUNTS_CREDS_PATH, SCOPES_SHEETS)
     client = gspread.authorize(creds)
     return client
+
+
+def get_service_analytics():
+    """Initializes an Analytics Reporting API V4 service object.
+  Returns:
+    An authorized Analytics Reporting API V4 service object.
+  """
+    credentials = ServiceAccountCredentials.from_json_keyfile_name(
+        SERVICE_ACCOUNTS_CREDS_PATH, SCOPES_ANALYTICS)
+    # Build the service object.
+    analytics = build('analyticsreporting', 'v4', credentials=credentials)
+    return analytics
