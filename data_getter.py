@@ -1,9 +1,7 @@
 from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
-
 import Setup
-import emailfunc
-import auth
+
 
 SERVICE_ACCOUNTS_CREDS_PATH = Setup.SERVICE_ACCOUNTS_CREDS_PATH
 SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
