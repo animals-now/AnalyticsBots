@@ -25,7 +25,7 @@ SIGN_UPS_DECREASE_FAILURE = -15
 DONT_TEST_CHALLENGE_TYPE = ['Challenge22 - Hebrew Form Plugin', '(not set)']
 ### Email Const ###
 SENDER = "me"
-TO = "maor@animals-now.org"
+TO_LIST = ["dev@animals-now.org", "maor@animals-now.org"]
 USER_ID = "me"
 
 
@@ -143,10 +143,11 @@ def send_email_on_session_decreased_failure(gmail_service, failure_dict: Dict[st
     for website, change_percent in failure_dict.items():
         decreased_by = -int(change_percent)
         subject = "{} - SESSIONS DECREASE ALERT".format(website)
-        body = create_session_decreased_alert(website, VIEW_DICT[website], period, decreased_by)
-        msg = emailfunc.create_message(SENDER, TO, subject, body)
-        emailfunc.send_message(gmail_service, USER_ID, msg)
-        sleep(3)
+        for to_email in TO_LIST:
+            body = create_session_decreased_alert(website, VIEW_DICT[website], period, decreased_by)
+            msg = emailfunc.create_message(SENDER, to_email, subject, body)
+            emailfunc.send_message(gmail_service, USER_ID, msg)
+            sleep(3)
 
 
 def send_email_on_sign_ups_decreased_failure(gmail_service, failure_dict: Dict[str, float], period: int,
@@ -157,6 +158,7 @@ def send_email_on_sign_ups_decreased_failure(gmail_service, failure_dict: Dict[s
         decreased_by = -int(change_percent)
         subject = "{} - SIGN UPS DECREASE ALERT".format(challenge_type)
         body = create_sign_ups_decreased_alert(challenge_type, view, period, decreased_by)
-        msg = emailfunc.create_message(SENDER, TO, subject, body)
-        emailfunc.send_message(gmail_service, USER_ID, msg)
-        sleep(3)
+        for to_email in TO_LIST:
+            msg = emailfunc.create_message(SENDER, to_email, subject, body)
+            emailfunc.send_message(gmail_service, USER_ID, msg)
+            sleep(3)
