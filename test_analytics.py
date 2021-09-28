@@ -20,8 +20,8 @@ DIMENSION = {
     'event_action': 'eventAction'
 }
 
-SESSIONS_DECREASE_FAILURE = -20
-SIGN_UPS_DECREASE_FAILURE = -15
+SESSIONS_DECREASE_FAILURE = -25
+SIGN_UPS_DECREASE_FAILURE = -25
 DONT_TEST_CHALLENGE_TYPE = ['Challenge22 - Hebrew Form Plugin', '(not set)']
 ### Email Const ###
 SENDER = "me"
