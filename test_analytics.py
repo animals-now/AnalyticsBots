@@ -20,12 +20,14 @@ DIMENSION = {
     'event_action': 'eventAction'
 }
 
-SESSIONS_DECREASE_FAILURE = -25
-SIGN_UPS_DECREASE_FAILURE = -25
+SESSIONS_DECREASE_FAILURE = -1
+SIGN_UPS_DECREASE_FAILURE = -1
 DONT_TEST_CHALLENGE_TYPE = ['Challenge22 - Hebrew Form Plugin', '(not set)']
 ### Email Const ###
 SENDER = "me"
-TO_LIST = ["dev@animals-now.org", "maor@animals-now.org", "saharr@animals-now.org"]
+#TO_LIST = ["dev@animals-now.org", "maor@animals-now.org", "saharr@animals-now.org"]
+TO_LIST = ["maor@animals-now.org"]
+
 USER_ID = "me"
 
 
@@ -138,9 +140,8 @@ def get_challenges_sign_ups_failure(analytics_service: DataGetter, view: str=Set
     failure_dict = create_failure_dictionary(change_dict, SIGN_UPS_DECREASE_FAILURE)
     return failure_dict
 
-
 def send_email_on_session_decreased_failure(gmail_service, failure_dict: Dict[str, float], period: int) -> None:
-    subject = "SESSIONS DECREASE ALERT"
+    subject = "{} Days - SESSIONS DECREASE ALERT".format(period)
     body = ""
     for website, change_percent in failure_dict.items():
         decreased_by = -int(change_percent)
@@ -153,7 +154,7 @@ def send_email_on_session_decreased_failure(gmail_service, failure_dict: Dict[st
 
 def send_email_on_sign_ups_decreased_failure(gmail_service, failure_dict: Dict[str, float], period: int,
                                              view: str = Setup.ALL_CHALLENGES_VIEW_ID) -> None:
-    subject = "SIGN UPS DECREASE ALERT"
+    subject = "{} Days - SIGN UPS DECREASE ALERT".format(period)
     body = ""
     for challenge_type, change_percent in failure_dict.items():
         if challenge_type in DONT_TEST_CHALLENGE_TYPE:
@@ -161,6 +162,8 @@ def send_email_on_sign_ups_decreased_failure(gmail_service, failure_dict: Dict[s
         decreased_by = -int(change_percent)
         body += "\n\n" + create_sign_ups_decreased_alert(challenge_type, view, period, decreased_by)
     for to_email in TO_LIST:
+        if body == "":
+            break
         msg = emailfunc.create_message(SENDER, to_email, subject, body)
         emailfunc.send_message(gmail_service, USER_ID, msg)
         sleep(3)
