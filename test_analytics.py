@@ -20,12 +20,13 @@ DIMENSION = {
     'event_action': 'eventAction'
 }
 
-SESSIONS_DECREASE_FAILURE = -25
-SIGN_UPS_DECREASE_FAILURE = -25
+SESSIONS_DECREASE_FAILURE = -1
+SIGN_UPS_DECREASE_FAILURE = -1
 DONT_TEST_CHALLENGE_TYPE = ['Challenge22 - Hebrew Form Plugin', '(not set)']
 ### Email Const ###
 SENDER = "me"
-TO_LIST = ["dev@animals-now.org", "maor@animals-now.org"]
+#TO_LIST = ["dev@animals-now.org", "maor@animals-now.org"]
+TO_LIST = ["maor@animals-now.org"]
 USER_ID = "me"
 
 
@@ -140,25 +141,27 @@ def get_challenges_sign_ups_failure(analytics_service: DataGetter, view: str=Set
 
 
 def send_email_on_session_decreased_failure(gmail_service, failure_dict: Dict[str, float], period: int) -> None:
+    subject = "SESSIONS DECREASE ALERT"
+    body = ""
     for website, change_percent in failure_dict.items():
         decreased_by = -int(change_percent)
-        subject = "{} - SESSIONS DECREASE ALERT".format(website)
-        for to_email in TO_LIST:
-            body = create_session_decreased_alert(website, VIEW_DICT[website], period, decreased_by)
-            msg = emailfunc.create_message(SENDER, to_email, subject, body)
-            emailfunc.send_message(gmail_service, USER_ID, msg)
-            sleep(3)
+        body += "\n\n" + create_session_decreased_alert(website, VIEW_DICT[website], period, decreased_by)
+    for to_email in TO_LIST:
+        msg = emailfunc.create_message(SENDER, to_email, subject, body)
+        emailfunc.send_message(gmail_service, USER_ID, msg)
+        sleep(3)
 
 
 def send_email_on_sign_ups_decreased_failure(gmail_service, failure_dict: Dict[str, float], period: int,
-                                             view: str=Setup.ALL_CHALLENGES_VIEW_ID) -> None:
+                                             view: str = Setup.ALL_CHALLENGES_VIEW_ID) -> None:
+    subject = "SIGN UPS DECREASE ALERT"
+    body = ""
     for challenge_type, change_percent in failure_dict.items():
         if challenge_type in DONT_TEST_CHALLENGE_TYPE:
             continue
         decreased_by = -int(change_percent)
-        subject = "{} - SIGN UPS DECREASE ALERT".format(challenge_type)
-        body = create_sign_ups_decreased_alert(challenge_type, view, period, decreased_by)
-        for to_email in TO_LIST:
-            msg = emailfunc.create_message(SENDER, to_email, subject, body)
-            emailfunc.send_message(gmail_service, USER_ID, msg)
-            sleep(3)
+        body += "\n\n" + create_sign_ups_decreased_alert(challenge_type, view, period, decreased_by)
+    for to_email in TO_LIST:
+        msg = emailfunc.create_message(SENDER, to_email, subject, body)
+        emailfunc.send_message(gmail_service, USER_ID, msg)
+        sleep(3)
