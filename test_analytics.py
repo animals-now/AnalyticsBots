@@ -145,6 +145,8 @@ def send_email_on_session_decreased_failure(gmail_service, failure_dict: Dict[st
         decreased_by = -int(change_percent)
         body += "\n\n" + create_session_decreased_alert(website, VIEW_DICT[website], period, decreased_by)
     for to_email in TO_LIST:
+        if body == "":
+            break
         msg = emailfunc.create_message(SENDER, to_email, subject, body)
         emailfunc.send_message(gmail_service, USER_ID, msg)
         sleep(3)
