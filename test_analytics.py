@@ -25,7 +25,7 @@ SIGN_UPS_DECREASE_FAILURE = -25
 DONT_TEST_CHALLENGE_TYPE = ['Challenge22 - Hebrew Form Plugin', '(not set)', 'Challenge22 - Hebrew P3']
 ### Email Const ###
 SENDER = "me"
-TO_LIST = ["dev@animals-now.org", "maor@animals-now.org", "saharr@animals-now.org"]
+TO_LIST = ["dev@animals-now.org", "maor@animals-now.org", "saharr@animals-now.org", "roni@animals-now.org"]
 USER_ID = "me"
 
 
