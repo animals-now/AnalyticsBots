@@ -21,7 +21,7 @@ DIMENSION = {
 }
 
 SESSIONS_DECREASE_FAILURE = -30
-SIGN_UPS_DECREASE_FAILURE = -50
+SIGN_UPS_DECREASE_FAILURE = -45
 DONT_TEST_CHALLENGE_TYPE = ['Challenge22 - Hebrew Form Plugin', '(not set)', 'Challenge22 - Hebrew P3']
 ### Email Const ###
 SENDER = "me"
