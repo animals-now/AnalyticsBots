@@ -5,7 +5,8 @@ import Setup
 from data_getter import DataGetter
 import emailfunc
 
-
+# todo: fix the animals url to https://animals-now.org/
+# also make monthly arlet from 25% decrease and weekly only from 60% decrease
 VIEW_DICT = {
     "Veg.co.il": Setup.VEG_VIEW_ID,
     "animals-org.il": Setup.ANIMALS_VIEW_ID,
